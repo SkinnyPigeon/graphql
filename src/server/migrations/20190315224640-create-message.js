@@ -17,6 +17,24 @@ module.exports = {
       chatId: {
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'SET NULL',
+        onUpdate: 'cascade',
+      },
+      chatId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Chats',
+          key: 'id'
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
