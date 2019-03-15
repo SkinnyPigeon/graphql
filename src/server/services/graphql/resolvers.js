@@ -1,5 +1,22 @@
 import logger from '../../helpers/logger';
 
+let posts = [{
+    id: 2,
+    text: 'Lorem ipsum',
+    user: {
+        avatar: '/uploads/avatar1.png',
+        username: 'Test User'
+    }
+},
+{
+    id: 1,
+    text: 'Lorem ipsum',
+    user: {
+        avatar: '/uploads/avatar2.png',
+        username: 'Test User 2'
+    }
+}];
+
 export default function resolver() {
     const { db } = this;
     const { Post, User, Chat, Message } = db.models;
@@ -31,7 +48,7 @@ export default function resolver() {
                 return Post.findAll({ order: [['createdAt', 'DESC']] });
             },
             chat(root, { chatId }, context) {
-                return Chat.findById(chatId, {
+                return Chat.findByPk(chatId, {
                     include: [{
                         model: User,
                         required: true,
@@ -119,5 +136,6 @@ export default function resolver() {
             },
         }
     };
+
     return resolvers;
 }
