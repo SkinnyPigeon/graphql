@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../../assets/css/style.css';
+import { Helmet } from 'react-helmet';
 
 const posts = [{
     id: 2,
@@ -19,37 +20,41 @@ const posts = [{
 }];
 
 export default class App extends Component {
-    
+
     state = {
         posts: posts,
         postContent: ''
     }
 
     handlePostContentChange = (event) => {
-        this.setState({postContent: event.target.value})
+        this.setState({ postContent: event.target.value })
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
         const newPost = {
-          id: this.state.posts.length + 1,
-          text: this.state.postContent,
-          user: {
-            avatar: '/uploads/avatar1.png',
-            username: 'Fake User'
-          }
+            id: this.state.posts.length + 1,
+            text: this.state.postContent,
+            user: {
+                avatar: '/uploads/avatar1.png',
+                username: 'SkinnyPigeon'
+            }
         };
         this.setState((prevState) => ({
-          posts: [newPost, ...prevState.posts],
-          postContent: ''
+            posts: [newPost, ...prevState.posts],
+            postContent: ''
         }));
     }
-    
+
     render() {
-        const {posts, postContent} = this.state
+        const { posts, postContent } = this.state
 
         return (
             <div className="container">
+                <Helmet>
+                    <title>Graphbook - Feed</title>
+                    <meta name="description" content="Newsfeed of all your friends on Graphbook" />
+                </Helmet>
                 <div className="postForm">
                     <form onSubmit={this.handleSubmit}>
                         <textarea value={postContent} onChange={this.handlePostContentChange} placeholder="Write your custom post!" />
