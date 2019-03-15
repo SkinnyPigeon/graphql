@@ -20,7 +20,12 @@ export default function resolver() {
                 logger.log({ level: 'info', message: 'Post was created' });
                 return postObject;
             },
-        }
+        },
+        Post: {
+            user(post, args, context) {
+              return post.getUser();
+            },
+          },
     }
     return resolvers;
 }
