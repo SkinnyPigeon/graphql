@@ -5,12 +5,12 @@ import Schema from './schema';
 
 const executableSchema = makeExecutableSchema({
     typeDefs: Schema,
-    resolvers: Resolvers
+    resolvers: Resolvers,
 });
 
 const server = new ApolloServer({
     schema: executableSchema,
-    context: ({ req }) => req
+    context: ({ req }) => req,
 });
 
 export default server;
