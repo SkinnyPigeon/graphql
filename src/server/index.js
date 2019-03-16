@@ -5,14 +5,10 @@ import cors from 'cors';
 import compress from 'compression';
 import servicesLoader from './services';
 import db from './database';
-
 const utils = {
-  db,
+    db,
 };
-
 const services = servicesLoader(utils);
-
-
 const root = path.join(__dirname, '../../');
 const app = express();
 

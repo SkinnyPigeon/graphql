@@ -12,27 +12,27 @@ module.exports = {
     },
     module: {
         rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'babel-loader'
             }
-        ]
-    },
+          },
+          {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
+          }
+       ]
+    }, 
     devServer: {
         port: 3000,
         open: true
     },
     plugins: [
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin([buildDirectory]),
         new HtmlWebpackPlugin({
-            template: './public/index.html'
+          template: './public/index.html'
         })
     ]
 };
