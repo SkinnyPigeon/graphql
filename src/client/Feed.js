@@ -5,6 +5,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Loading from './components/loading';
 import Error from './components/error';
 import Post from './components/post/index'
+import FeedList from './components/post/feedlist';
+import PostsFeedQuery from './components/queries/postsFeed';
 
 const GET_POSTS = gql`
   query postsFeed($page: Int, $limit: Int) { 
@@ -137,17 +139,9 @@ export default class Feed extends Component {
                   )}
                 </Mutation>
               </div>
-              <div className="feed">
-                <InfiniteScroll
-                  loadMore={() => self.loadMore(fetchMore)}
-                  hasMore={hasMore}
-                  loader={<div className="loader" key={"loader"}>Loading ...</div>}
-                >
-                  {posts.map((post, i) =>
-                    <Post key={post.id} post={post} />
-                  )}
-                </InfiniteScroll>
-              </div>
+              <PostsFeedQuery>
+                <FeedList />
+              </PostsFeedQuery>
             </div>
           )
         }}
