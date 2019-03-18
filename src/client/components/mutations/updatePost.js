@@ -17,33 +17,32 @@ const GET_POSTS = gql`
   }
 `;
 
-const ADD_POST = gql`
-mutation addPost($post : PostInput!) {
-    addPost(post : $post) {
+const UPDATE_POST = gql`
+mutation updatePost($post : PostInput!, $postId : Int!) {
+    updatePost(post : $post, postId : $postId) {
         id
         text
-        user {
-            username
-            avatar
-        }
     }
 }`;
 
-export default class AddPostMutation extends Component {
+export default class UpdatePostMutation extends Component {
     state = {
-        postContent: ''
+        postContent: this.props.post.text
     }
     changePostContent = (value) => {
         this.setState({postContent: value})
     }
     render() {
         const self = this;
-        const { children, variables } = this.props;
+        const { children } = this.props;
         const { postContent } = this.state;
-   
+
+        const postId = this.props.post.id;
+        const variables = { page: 0, limit: 10};
+
         return (
             <Mutation
-                update = {(store, { data: { addPost } }) => {
+                update = {(store, { data: { updatePost } }) => {
                     var query = {
                         query: GET_POSTS,
                     };
@@ -51,28 +50,27 @@ export default class AddPostMutation extends Component {
                         query.variables = variables;
                     }
                     const data = store.readQuery(query);
-                    data.postsFeed.posts.unshift(addPost);
+                    for(var i = 0; i < data.postsFeed.posts.length; i++) {
+                        if(data.postsFeed.posts[i].id === postId) {
+                            data.postsFeed.posts[i].text = updatePost.text;
+                            break;
+                        }
+                    }
                     store.writeQuery({ ...query, data });
                 }}
                 optimisticResponse= {{
                     __typename: "Mutation",
-                    addPost: {
+                    updatePost: {
                         __typename: "Post",
                         text: postContent,
-                        id: -1,
-                        user: {
-                            __typename: "User",
-                            username: "Loading...",
-                            avatar: "/public/loading.gif"
-                        }
                     }
                 }}
-                mutation={ADD_POST}>
-                    {addPost => 
+                mutation={UPDATE_POST}>
+                    {updatePost => 
                         React.Children.map(children, function(child){
-                            return React.cloneElement(child, { addPost, postContent, changePostContent: self.changePostContent });
+                            return React.cloneElement(child, { updatePost, postContent, postId, changePostContent: self.changePostContent });
                         })
-                }
+                    }
             </Mutation>
         )
     }
