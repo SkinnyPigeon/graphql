@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import JWT from 'jsonwebtoken';
 
 const Op = Sequelize.Op;
+const { JWT_SECRET } = process.env;
 
 export default function resolver() {
     const { db } = this;
