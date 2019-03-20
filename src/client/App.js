@@ -6,15 +6,26 @@ import '../../assets/css/style.css';
 import './components/fontawesome';
 import Bar from './components/bar';
 import LoginRegisterForm from './components/loginregister';
+import CurrentUserQuery from './components/queries/currentUser';
+import { withApollo } from "react-apollo";
 
-export default class App extends Component {
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.unsubscribe = props.client.onResetStore(
+            () => this.changeLoginState(false)
+        );
+    }
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
     state = {
         loggedIn: false
     }
     componentWillMount() {
         const token = localStorage.getItem('jwt');
-        if (token) {
-            this.setState({ loggedIn: true });
+        if(token) {
+            this.setState({loggedIn: true});
         }
     }
     changeLoginState = (loggedIn) => {
@@ -27,11 +38,17 @@ export default class App extends Component {
                     <title>Graphbook - Feed</title>
                     <meta name="description" content="Newsfeed of all your friends on Graphbook" />
                 </Helmet>
-                <LoginRegisterForm changeLoginState={this.changeLoginState}/>
-                <Bar />
-                <Feed />
-                <Chats />
+                {this.state.loggedIn ?
+                    <CurrentUserQuery>
+                        <Bar />
+                        <Feed />
+                        <Chats />
+                    </CurrentUserQuery>
+                    : <LoginRegisterForm changeLoginState={this.changeLoginState}/>
+                }
             </div>
         )
     }
 }
+
+export default withApollo(App)
