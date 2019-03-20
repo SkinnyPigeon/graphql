@@ -18,8 +18,8 @@ export class UserConsumer extends Component {
         return (
             <ApolloConsumer>
                 {client => {
-                    const { currentUser } = client.readQuery({ query: GET_CURRENT_USER });
-                    return React.Children.map(children, function (child) {
+                    const {currentUser} = client.readQuery({ query: GET_CURRENT_USER});
+                    return React.Children.map(children, function(child){
                         return React.cloneElement(child, { user: currentUser });
                     });
                 }}

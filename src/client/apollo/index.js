@@ -6,7 +6,7 @@ import { ApolloLink } from 'apollo-link';
 
 const AuthLink = (operation, next) => {
   const token = localStorage.getItem('jwt');
-  if (token) {
+  if(token) {
     operation.setContext(context => ({
       ...context,
       headers: {
@@ -27,8 +27,7 @@ const client = new ApolloClient({
             localStorage.removeItem('jwt');
             client.resetStore()
           }
-          console.log(`[GraphQL error]: Message: ${message}, Location: 
-          ${locations}, Path: ${path}`);
+          console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
         });
         if (networkError) {
           console.log(`[Network error]: ${networkError}`);

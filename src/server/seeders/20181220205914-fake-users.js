@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('Users', [{
       avatar: '/uploads/avatar1.png',
       username: 'TestUser',
-      password: 'password',
+      password: '$2a$10$bE3ovf9/Tiy/d68bwNUQ0.zCjwtNFq9ukg9h4rhKiHCb6x5ncKife',
       email: 'test1@example.com',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -13,7 +13,7 @@ module.exports = {
     {
       avatar: '/uploads/avatar2.png',
       username: 'TestUser2',
-      password: 'password',
+      password: '$2a$10$bE3ovf9/Tiy/d68bwNUQ0.zCjwtNFq9ukg9h4rhKiHCb6x5ncKife',
       email: 'test2@example.com',
       createdAt: new Date(),
       updatedAt: new Date(),
