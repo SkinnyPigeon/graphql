@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SearchBar from './search';
 import UserBar from './user';
+import Logout from './logout';
 import { UserConsumer } from '../context/user';
 
 export default class Bar extends Component {
@@ -13,6 +14,7 @@ export default class Bar extends Component {
                         <UserBar />
                     </UserConsumer>
                 </div>
+                <Logout changeLoginState={this.props.changeLoginState}/>
             </div>
         );
     }
