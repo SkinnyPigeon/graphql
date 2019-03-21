@@ -282,7 +282,7 @@ export default function resolver() {
             },
             async uploadAvatar(root, { file }, context) {
                 const { stream, filename, mimetype, encoding } = await file;
-                const bucket = 'daveeatsthetoothbrush';
+                const bucket = 'bobeatsthetoothbrush';
                 const params = {
                   Bucket: bucket,
                   Key: context.user.id + '/' + filename,
