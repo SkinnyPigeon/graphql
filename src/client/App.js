@@ -9,6 +9,7 @@ import LoginRegisterForm from './components/loginregister';
 import CurrentUserQuery from './components/queries/currentUser';
 import { withApollo } from "react-apollo";
 import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
+import Router from './router';
 
 class App extends Component {
     constructor(props) {
@@ -34,20 +35,15 @@ class App extends Component {
     }
     render() {
         return (
-            <div className="container">
-                <Helmet>
-                    <title>Graphbook - Feed</title>
-                    <meta name="description" content="Newsfeed of all your friends on Graphbook" />
-                </Helmet>
-                {this.state.loggedIn ?
-                    <CurrentUserQuery>
-                        <Bar />
-                        <Feed />
-                        <Chats />
-                    </CurrentUserQuery>
-                    : <LoginRegisterForm changeLoginState={this.changeLoginState}/>
-                }
-            </div>
+          <div>
+            <Helmet>
+              <title>Graphbook - Feed</title>
+              <meta name="description" content="Newsfeed of all your friends   
+               on Graphbook" />
+            </Helmet>
+            <Router loggedIn={this.state.loggedIn} changeLoginState=
+             {this.changeLoginState}/>
+          </div>
         )
     }
 }
