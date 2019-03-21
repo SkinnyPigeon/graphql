@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import LoginRegisterForm from './components/loginregister';
 import Main from './Main';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import User from './User';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props) => (
@@ -37,6 +38,7 @@ export default class Routing extends Component {
             <Router>
                 <Switch>
                     <PrivateRoute path="/app" component={() => <Main changeLoginState={this.props.changeLoginState} />} loggedIn={this.props.loggedIn} />
+                    <PrivateRoute path="/user/:username" component={props => <User {...props} changeLoginState={this.props.changeLoginState}/>} loggedIn={this.props.loggedIn}/>
                     <LoginRoute exact path="/" component={() => <LoginRegisterForm changeLoginState={this.props.changeLoginState} />} loggedIn={this.props.loggedIn} />
                     <Route component={NotFound} />
                 </Switch>
