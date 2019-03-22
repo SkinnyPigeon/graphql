@@ -5,6 +5,11 @@ import cors from 'cors';
 import compress from 'compression';
 import servicesLoader from './services';
 import db from './database';
+import ApolloClient from './ssr/apollo';
+import React from 'react';
+import Graphbook from './ssr/';
+import ReactDOM from 'react-dom/server';
+
 const utils = {
     db,
 };
@@ -51,6 +56,10 @@ for (let i = 0; i < serviceNames.length; i += 1) {
 }
 
 app.get('*', (req, res) => {
+  const client = ApolloClient(req);
+  const context= {};
+  const App = (<Graphbook client={client} location={req.url} context={context}/>);
+  const content = ReactDOM.renderToString(App);
   res.status(200);
   res.send(`<!doctype html>`);
   res.end();
