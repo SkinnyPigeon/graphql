@@ -15,13 +15,10 @@ class App extends Component {
         return (
             <div>
                 <Helmet>
-                <title>Graphbook - Feed</title>
-                <meta name="description" content="Newsfeed of all your 
-                friends on Graphbook" />
+                    <title>Graphbook - Feed</title>
+                    <meta name="description" content="Newsfeed of all your friends on Graphbook" />
                 </Helmet>
-                <Router loggedIn={this.state.loggedIn} changeLoginState=
-                {this.changeLoginState} location={this.props.location} 
-                context={this.props.context}/>
+                <Router loggedIn={this.state.loggedIn} changeLoginState={this.changeLoginState} location={this.props.location} context={this.props.context}/>
             </div>
         )
     }

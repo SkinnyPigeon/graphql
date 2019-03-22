@@ -19,23 +19,22 @@ const modalStyle = {
 
 function dataURItoBlob(dataURI) {
     var byteString = atob(dataURI.split(',')[1]);
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')
-    [0];
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
     var ia = new Uint8Array(byteString.length);
-
+   
     for (var i = 0; i < byteString.length; i++) {
         ia[i] = byteString.charCodeAt(i);
     }
-
-    const file = new Blob([ia], { type: mimeString });
+  
+    const file = new Blob([ia], {type:mimeString});
     return file;
 }
 
 export default class AvatarUpload extends Component {
-    state = {
+    state = { 
         result: null,
         filename: null,
-        filetype: null,
+        filetype: null,      
         src: null,
         error: null,
     }
@@ -46,7 +45,7 @@ export default class AvatarUpload extends Component {
         const self = this;
         var file = dataURItoBlob(this.state.result);
         file.name = this.state.filename;
-        this.props.uploadAvatar({ variables: { file } }).then(() => {
+        this.props.uploadAvatar({variables: { file }}).then(() => {
             self.props.showModal();
         });
     }
@@ -56,18 +55,18 @@ export default class AvatarUpload extends Component {
     render() {
         return (
             <Modal
-                isOpen={this.props.isOpen}
-                onRequestClose={this.props.showModal}
-                contentLabel="Change avatar"
-                style={modalStyle}
+            isOpen={this.props.isOpen}
+            onRequestClose={this.props.showModal}
+            contentLabel="Change avatar"
+            style={modalStyle}
             >
-                <DropNCrop onChange={this.onChange} value={this.state} />
-                {this.state.src !== null && (
-                    <button className="cancelUpload" onClick=
-                        {this.changeImage}>Change image</button>
-                )}
-                <button className="uploadAvatar" onClick=
-                    {this.uploadAvatar}>Save</button>
+            <DropNCrop onChange={this.onChange} value={this.state} />
+            {this.state.src !== null && (
+                <button className="cancelUpload" onClick=
+                {this.changeImage}>Change image</button>
+            )}
+            <button className="uploadAvatar" onClick=
+            {this.uploadAvatar}>Save</button>
             </Modal>
         )
     }

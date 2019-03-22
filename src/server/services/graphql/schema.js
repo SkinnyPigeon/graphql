@@ -33,6 +33,11 @@ const typeDefinitions = `
     posts: [Post]
   }
 
+  type File {
+    filename: String!
+    url: String!
+  }
+
   input PostInput {
     text: String!
   }
@@ -61,11 +66,6 @@ const typeDefinitions = `
 
   type Auth {
     token: String
-  }
-
-  type File {
-    filename: String!
-    url: String!
   }
   
   type RootMutation {
@@ -105,9 +105,9 @@ const typeDefinitions = `
     chats: [Chat]
     chat(chatId: Int): Chat
     postsFeed(page: Int, limit: Int, username: String): PostFeed @auth
+    user(username: String!): User @auth
     usersSearch(page: Int, limit: Int, text: String!): UsersSearch
     currentUser: User @auth
-    user(username: String!): User @auth
   }
 
   schema {

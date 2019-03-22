@@ -27,7 +27,7 @@ export default (utils) => {
           if(err) {
             return req;
           } else {
-            return utils.db.models.User.findByPk(result.id).then((user) => {
+            return utils.db.models.User.findById(result.id).then((user) => {
               return Object.assign({}, req, { user });
             });
           }
