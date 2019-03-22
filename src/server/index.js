@@ -25,8 +25,18 @@ if(process.env.NODE_ENV === 'production') {
     app.use(compress());
     app.use(cors());
 }
-
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
+
+if(process.env.NODE_ENV === 'development') {
+  const devMiddleware = require('webpack-dev-middleware');
+  const hotMiddleware = require('webpack-hot-middleware');
+  const webpack = require('webpack');
+  const config = require('../../webpack.server.config');
+  const compiler = webpack(config);
+  app.use(devMiddleware(compiler));
+  app.use(hotMiddleware(compiler));
+}
+
 app.use('/', express.static(path.join(root, 'dist/client')));
 app.use('/uploads', express.static(path.join(root, 'uploads')));
 
@@ -40,7 +50,9 @@ for (let i = 0; i < serviceNames.length; i += 1) {
   }
 }
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(root, '/dist/client/index.html'));
+app.get('*', (req, res) => {
+  res.status(200);
+  res.send(`<!doctype html>`);
+  res.end();
 });
 app.listen(8000, () => console.log('Listening on port 8000!'));
