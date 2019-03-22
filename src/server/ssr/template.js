@@ -15,8 +15,8 @@ export default function htmlTemplate(content) {
         ${head.meta.toString()}
       </head>
       <body>
-        ${ReactDOM.renderToStaticMarkup(<div id="root" 
-          dangerouslySetInnerHTML={{ __html: content }}></div>)}
+        ${ReactDOM.renderToStaticMarkup(<div id="root" dangerouslySetInnerHTML={{ __html: content }}></div>)}
+        ${ReactDOM.renderToStaticMarkup(<script dangerouslySetInnerHTML={{__html: `window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')}`}}/>)}
         <script src="/bundle.js"></script>
       </body>
     </html>

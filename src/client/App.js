@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
-import Feed from './Feed';
-import Chats from './Chats';
 import '../../assets/css/style.css';
 import './components/fontawesome';
-import Bar from './components/bar';
-import LoginRegisterForm from './components/loginregister';
-import CurrentUserQuery from './components/queries/currentUser';
 import { withApollo } from "react-apollo";
 import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 import Router from './router';
@@ -22,7 +17,7 @@ class App extends Component {
         this.unsubscribe();
     }
     state = {
-        loggedIn: false
+        loggedIn: (typeof window.__APOLLO_STATE__ !== typeof undefined && typeof window.__APOLLO_STATE__.ROOT_QUERY !== typeof undefined && typeof window.__APOLLO_STATE__.ROOT_QUERY.currentUser !== typeof undefined)
     }
     componentWillMount() {
         const token = localStorage.getItem('jwt');
