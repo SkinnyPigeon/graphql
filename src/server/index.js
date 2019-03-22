@@ -9,6 +9,8 @@ import ApolloClient from './ssr/apollo';
 import React from 'react';
 import Graphbook from './ssr/';
 import ReactDOM from 'react-dom/server';
+import template from './ssr/template';
+import { Helmet } from 'react-helmet';
 
 const utils = {
     db,
@@ -58,10 +60,16 @@ for (let i = 0; i < serviceNames.length; i += 1) {
 app.get('*', (req, res) => {
   const client = ApolloClient(req);
   const context= {};
-  const App = (<Graphbook client={client} location={req.url} context={context}/>);
+  const App = (<Graphbook client={client} location={req.url} context=
+  {context}/>);
   const content = ReactDOM.renderToString(App);
-  res.status(200);
-  res.send(`<!doctype html>`);
-  res.end();
+  if (context.url) {
+    res.redirect(301, context.url);
+  } else {
+    const head = Helmet.renderStatic();
+    res.status(200);
+    res.send(`<!doctype html>\n${template(content, head)}`);
+    res.end();
+  }
 });
 app.listen(8000, () => console.log('Listening on port 8000!'));
